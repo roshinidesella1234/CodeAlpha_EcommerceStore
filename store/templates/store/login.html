@@ -1,0 +1,46 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Sign In | AlphaStore{% endblock %}
+
+{% block category_bar %}{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <div class="auth-header">
+    <h1 class="auth-title">Welcome Back</h1>
+    <p class="auth-subtitle">Sign in to your AlphaStore account</p>
+  </div>
+
+  <form method="POST" action="{% url 'login' %}{% if next %}?next={{ next }}{% endif %}">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div class="alert alert-error" style="margin-bottom: 1rem;">
+        {% for error in form.non_field_errors %}
+          <div>{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="form-group">
+      <label class="form-label" for="{{ form.username.id_for_label }}">Username</label>
+      {{ form.username }}
+      {% if form.username.errors %}<div style="color: var(--danger); font-size: 0.8rem;">{{ form.username.errors }}</div>{% endif %}
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="{{ form.password.id_for_label }}">Password</label>
+      {{ form.password }}
+      {% if form.password.errors %}<div style="color: var(--danger); font-size: 0.8rem;">{{ form.password.errors }}</div>{% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-lg btn-primary btn-block" style="margin-top: 1rem;">
+      Sign In &rarr;
+    </button>
+  </form>
+
+  <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+    Don't have an account? <a href="{% url 'register' %}" style="font-weight: 700;">Create one now</a>
+  </div>
+</div>
+{% endblock %}

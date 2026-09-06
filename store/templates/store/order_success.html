@@ -1,0 +1,52 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Order Confirmed #{{ order.id }} | AlphaStore{% endblock %}
+
+{% block category_bar %}{% endblock %}
+
+{% block content %}
+<div style="max-width: 650px; margin: 2rem auto; text-align: center;">
+  <div style="background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 3rem; box-shadow: var(--shadow-md);">
+    <div style="width: 70px; height: 70px; background-color: #d1fae5; color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 1.5rem;">
+      ✓
+    </div>
+
+    <h1 style="font-size: 2rem; font-weight: 800; color: var(--dark); margin-bottom: 0.5rem;">Thank You for Your Order!</h1>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+      Your order <strong>#{{ order.id }}</strong> has been placed successfully and is being processed.
+    </p>
+
+    <div style="background-color: var(--bg-light); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: left; margin-bottom: 2rem;">
+      <h3 style="font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.8rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem;">
+        Order Details
+      </h3>
+      <div style="font-size: 0.9rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; color: var(--text-muted);">
+        <div><strong>Date:</strong> {{ order.created_at|date:"N j, Y H:i" }}</div>
+        <div><strong>Status:</strong> <span class="order-badge status-completed">{{ order.status }}</span></div>
+        <div><strong>Recipient:</strong> {{ order.full_name }}</div>
+        <div><strong>Email:</strong> {{ order.email }}</div>
+        <div style="grid-column: 1 / -1;"><strong>Shipping Address:</strong> {{ order.address }}, {{ order.city }} {{ order.postal_code }}</div>
+      </div>
+
+      <h4 style="font-size: 0.9rem; font-weight: 700; color: var(--dark); margin-top: 1.2rem; margin-bottom: 0.6rem;">Items Ordered</h4>
+      <div style="border-top: 1px solid var(--border); padding-top: 0.5rem;">
+        {% for item in order.items.all %}
+          <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.4rem;">
+            <span>{{ item.quantity }} &times; {{ item.product_name }}</span>
+            <span style="font-weight: 600;">${{ item.get_subtotal }}</span>
+          </div>
+        {% endfor %}
+        <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1rem; color: var(--primary); border-top: 1px solid var(--border); padding-top: 0.6rem; margin-top: 0.6rem;">
+          <span>Total Paid:</span>
+          <span>${{ order.total_price }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+      <a href="{% url 'order_history' %}" class="btn btn-outline">View Order History</a>
+      <a href="{% url 'product_list' %}" class="btn btn-primary">Continue Shopping &rarr;</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
