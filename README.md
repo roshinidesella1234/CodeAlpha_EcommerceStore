@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CodeAlpha Full-Stack E-Commerce Store
 
 A responsive, feature-rich full-stack E-Commerce web application built with **Django**, **SQLite**, **HTML5**, **CSS3**, and **JavaScript**.
@@ -85,3 +86,7 @@ To execute the automated end-to-end verification suite testing catalog loading, 
 ```bash
 python test_e2e.py
 ```
+=======
+# CodeAlpha_EcommerceStore
+Simple E-commerce Store using HTML, CSS, JS, Django/Express.js
+>>>>>>> ca69816c6a287b974fb1bce2e728fd021458c0ba
